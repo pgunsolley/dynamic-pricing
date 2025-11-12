@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Migrations\BaseMigration;
 
-class CreateFacilities extends BaseMigration
+class CreateContactEmails extends BaseMigration
 {
     /**
      * Change Method.
@@ -16,39 +16,26 @@ class CreateFacilities extends BaseMigration
     public function change(): void
     {
         $this
-            ->table('facilities', ['id' => false, 'primary_key' => ['id']])
+            ->table('contact_emails', ['id' => false, 'primary_key' => ['id']])
             ->addColumn('id', 'uuid', [
                 'default' => null,
                 'null' => false,
             ])
-            ->addColumn('name', 'string', [
+            ->addColumn('contact_id', 'uuid', [
                 'default' => null,
                 'null' => false,
             ])
-            ->addColumn('address', 'string', [
+            ->addColumn('email', 'string', [
                 'default' => null,
                 'null' => false,
             ])
-            ->addColumn('unit', 'string', [
+            ->addColumn('note', 'string', [
                 'default' => null,
                 'null' => true,
             ])
-            ->addColumn('city', 'string', [
-                'default' => null,
-                'null' => false,
-            ])
-            ->addColumn('state', 'string', [
-                'default' => null,
-                'null' => false,
-                'length' => 2,
-            ])
-            ->addColumn('zip', 'string', [
-                'default' => null,
-                'null' => false,
-            ])
             ->addColumn('created', 'datetime')
             ->addColumn('modified', 'datetime')
-            ->addIndex('name')
+            ->addForeignKey('contact_id', 'contacts')
             ->create();
     }
 }

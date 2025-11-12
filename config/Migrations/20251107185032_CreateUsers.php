@@ -18,6 +18,10 @@ class CreateUsers extends BaseMigration
         $this
             ->table('users', ['id' => false, 'primary_key' => ['id']])
             ->addColumn('id', 'uuid')
+            ->addColumn('organization_id', 'uuid', [
+                'default' => null,
+                'null' => false,
+            ])
             ->addColumn('email', 'string', [
                 'default' => null,
                 'null' => false,
@@ -26,18 +30,15 @@ class CreateUsers extends BaseMigration
                 'default' => null,
                 'null' => false,
             ])
-            // ::Founders, ::SuperUser, ::Standard, etc
-            ->addColumn('scope', 'integer', [
-                'default' => null,
-                'null' => false,
-            ])
-            // Active status ::Enabled, ::Disabled, 
+            // Active status ::Enabled, ::Disabled, etc
             ->addColumn('status', 'integer', [
                 'default' => null,
                 'null' => false,
             ])
             ->addColumn('created', 'datetime')
             ->addColumn('modified', 'datetime')
+            ->addIndex('email')
+            ->addForeignKey('organization_id', 'organizations')
             ->create();
     }
 }
